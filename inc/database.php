@@ -4,7 +4,7 @@ define('HOST', 'localhost');
 define('DATABASE', 'C22_transportbedrijf');
 define('USER', 'root');
 define('PASSWORD', '');
-$dbconn = '';
+
 
 //connectie maken
 try{

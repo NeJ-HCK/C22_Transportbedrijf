@@ -1,17 +1,5 @@
 <?php
-require_once 'inc/database.php';
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Klantgegevens</title>
-    <!--Hier komen eventueel css bestanden -->
-</head>
-<body>
-    <!--we zetten alles in een container-->
-    <div class = "container">
-        <?php 
-         //menu
+include ('inc/header.php');
 
          //header toevoegen
          echo '<header class="head">';
@@ -37,18 +25,38 @@ require_once 'inc/database.php';
 
         <?php
         //ophalen klantgegevens
-            $query = 'SELECT id, naam, cp, straat, huisnummer, postcode, plaats, telefoon, notitie 
+            $query = 'SELECT id, naam, cp, straat, huisnummer, postcode, plaats, telefoon 
                         FROM klant
                         ORDER BY naam, plaats
                         LIMIT 1,10;';
-        //
+            $result = mysqli_query($dbconn, $query);
+            $aantal = mysqli_num_rows($result);
+            $contentTable = '';
+            
         //tabel aanvullen met klantgegevens
+            if($aantal>0) {
+                while ($row = mysqli_fetch_array($result)) {
+                    $contentTable .= "<tr>
+                                        <td>" . $row['id'] . "</td>
+                                        <td>" . $row['naam'] . "</td>
+                                        <td>" . $row['cp'] . "</td>
+                                        <td>" . $row['straat'] . "</td>
+                                        <td>" . $row['huisnummer'] . "</td>
+                                        <td>" . $row['postcode'] . "</td>
+                                        <td>" . $row['plaats'] . "</td>
+                                        <td>" . $row['telefoon'] . "</td>
+                                        <td>
+                                            <a href ='klant_edit.php?id={$row['id']}' class='btn-edit'><i class ='material-icons md-24'>edit</i></a>
+                                            <a href ='klant_delete.php?id={$row['id']}' class='btn-delete'><i class ='material-icons md-24'>delete</i></a>
+                                    </tr>";
+                }
+            }
         //rest tabel
+            $contentTable .= "</table><br>";
+            echo $contentTable;
 
         //paginering van de tabel
         //include footer
         echo '</main>';
+        include ('inc/footer.php');
         ?>
-    </div>
-</body>
-</html>
