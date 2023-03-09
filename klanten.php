@@ -4,6 +4,7 @@ include ('inc/header.php');
          //header toevoegen
          echo '<header class="head">';
          //url om nieuw klant aan te maken
+         echo "<a href='klant_new.php' class='btn-new'><i class='material-icons md-24'>add</i></a>";
          echo '</header>';
          //main-content
          echo '<main class="main-content">';
